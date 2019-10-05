@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://main_theme.tres" type="Theme" id=1]
+[ext_resource path="res://Scripts/Ui/UiInventory.gd" type="Script" id=2]
+[ext_resource path="res://real-retro_new.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 30
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
+
+[node name="UiInventory" type="MarginContainer"]
+margin_right = 454.0
+margin_bottom = 534.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+theme = ExtResource( 1 )
+custom_constants/margin_top = 40
+custom_constants/margin_left = 40
+script = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 454.0
+margin_bottom = 534.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_right = 324.0
+margin_bottom = 36.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 1 )
+text = "inventory"
+uppercase = true
+

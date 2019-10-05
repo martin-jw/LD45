@@ -1,4 +1,43 @@
-[gd_scene format=2]
+[gd_scene load_steps=7 format=2]
 
-[node name="Node2D" type="Node2D"]
+[ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Disabler.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/CityGen.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/ChatBox.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Ui/UiInventory.tscn" type="PackedScene" id=5]
 
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 1280, 720 )
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Camera" type="Camera2D" parent="."]
+offset = Vector2( 0, -128 )
+current = true
+editor_draw_drag_margin = true
+
+[node name="Disabler" type="Area2D" parent="Camera"]
+position = Vector2( 0, -128 )
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/Disabler"]
+shape = SubResource( 1 )
+
+[node name="City" parent="." instance=ExtResource( 3 )]
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="ChatBox" parent="UILayer" instance=ExtResource( 4 )]
+visible = false
+margin_right = -1280.0
+margin_bottom = -720.0
+
+[node name="UiInventory" parent="UILayer" instance=ExtResource( 5 )]
+
+[connection signal="area_entered" from="Camera/Disabler" to="Camera/Disabler" method="_on_object_entered"]
+[connection signal="area_exited" from="Camera/Disabler" to="Camera/Disabler" method="_on_object_exited"]
+[connection signal="body_entered" from="Camera/Disabler" to="Camera/Disabler" method="_on_object_entered"]
+[connection signal="body_exited" from="Camera/Disabler" to="Camera/Disabler" method="_on_object_exited"]
+[connection signal="npc_removed" from="Camera/Disabler" to="." method="_on_npc_removed"]
+[connection signal="trash_removed" from="Camera/Disabler" to="." method="_on_trash_removed"]

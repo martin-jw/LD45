@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Inventory.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 32, 16 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 30.0
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 160.0
+
+[node name="Player" type="KinematicBody2D" groups=[
+"Player",
+]]
+script = ExtResource( 1 )
+speed = 200.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -32.0
+margin_top = -256.0
+margin_right = 32.0
+
+[node name="ShouldHide" type="Area2D" parent="." groups=[
+"ShouldHide",
+]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShouldHide"]
+position = Vector2( 0, -16 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="InteractRange" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractRange"]
+shape = SubResource( 3 )
+
+[node name="Inventory" type="Node2D" parent="."]
+script = ExtResource( 2 )
+
+[connection signal="area_entered" from="InteractRange" to="." method="_on_interact_area_entered"]
+[connection signal="area_exited" from="InteractRange" to="." method="_on_interact_area_exited"]
+[connection signal="item_changed" from="Inventory" to="." method="item_changed"]

@@ -6,35 +6,89 @@ const PLOT = 0
 const ROAD = 1
 const HIGHWAY = 2
 const OUTSIDE = 3
+const FILLED_PLOT = 4
 
-const MAP_WIDTH: int = 80
-const MAP_HEIGHT: int = 50
+var MAP_WIDTH: int = 80
+var MAP_HEIGHT: int = 50
+
+var spawnpoint: Vector2 = Vector2.ZERO
 
 var array: Array = Array()
+onready var tilemap: TileMap = $"../TileMap"
 
-func _ready():
-	randomize()
+func generate():
 	for i in range(0, MAP_WIDTH * MAP_HEIGHT):
 		array.append(0)
-		
-	print(array.size())
 
 	gen_highways()
 	gen_roads()
-	update()
+	find_spawnpoint()
+	
+	fill_tilemap()
+	tilemap.update()
+	
+func get_spawnpoint() -> Vector2:
+	return spawnpoint
+	
+func find_spawnpoint():
 
-func _draw():
+	var x = -1
+	var y = -1
+	while get_tile_padded(x, y) != PLOT:
 
-	for y in range(0, MAP_HEIGHT):
-		for x in range(0, MAP_WIDTH):
-			var tile = get_tile(x, y)
-			var color = Color.black
-			if tile == HIGHWAY:
-				color = Color.green
-			if tile == ROAD:
-				color = Color.white
+		x = round(rand_range(10, MAP_WIDTH - 11))
+		y = round(rand_range(10, MAP_HEIGHT - 11))
+
+	spawnpoint = Vector2(x, y)
+	set_tile(x, y, FILLED_PLOT)
+	
+func fill_tilemap():
+	var psize = Config.PLOT_SIZE
+	for x in range(0, MAP_WIDTH):
+		for y in range(0, MAP_HEIGHT):
+			if get_tile(x, y) == HIGHWAY or get_tile(x, y) == ROAD:
+				for dx in range(0, psize):
+					for dy in range(0, psize):
+						tilemap.set_cell(x * psize + dx, y * psize + dy, 0, false, false, false, Vector2(0, 0))
+
+						if dx == 0 and !is_road(x - 1, y):
+							tilemap.set_cell(x * psize  + dx, y * psize + dy, 0, false, false, false, Vector2(0, 1))
+						if dx == psize - 1 and !is_road(x + 1, y):
+							tilemap.set_cell(x * psize + dx, y * psize + dy, 0, false, false, false, Vector2(0, 1))
+						if dy == 0 and !is_road(x, y - 1):
+							tilemap.set_cell(x * psize + dx, y * psize + dy, 0, false, false, false, Vector2(0, 1))
+						if dy == psize - 1 and !is_road(x, y + 1):
+							tilemap.set_cell(x * psize + dx, y * psize + dy, 0, false, false, false, Vector2(0, 1))
+
+						if dx == 0 and dy == 0 and !is_road(x - 1, y - 1):
+							tilemap.set_cell(x * psize + dx, y * psize + dy, 0, false, false, false, Vector2(0, 1))
+						if dx == psize - 1 and dy == 0 and !is_road(x + 1, y - 1):
+							tilemap.set_cell(x * psize + dx, y * psize + dy, 0, false, false, false, Vector2(0, 1))
+						if dx == psize - 1 and dy == psize - 1 and !is_road(x + 1, y + 1):
+							tilemap.set_cell(x * psize + dx, y * psize + dy, 0, false, false, false, Vector2(0, 1))
+						if dx == 0 and dy == psize - 1 and !is_road(x - 1, y + 1):
+							tilemap.set_cell(x * psize + dx, y * psize + dy, 0, false, false, false, Vector2(0, 1))
+
+			else:
+				for dx in range(0, psize):
+					for dy in range(0, psize):
+						tilemap.set_cell(x * psize + dx, y * psize + dy, 0, false, false, false, Vector2(0, 2))
+
+# func _draw():
+
+# 	for y in range(0, MAP_HEIGHT):
+# 		for x in range(0, MAP_WIDTH):
+# 			var tile = get_tile(x, y)
+# 			var color = Color.black
+# 			if tile == HIGHWAY:
+# 				color = Color.green
+# 			if tile == ROAD:
+# 				color = Color.white
 				
-			draw_rect(Rect2(x * 10, y * 10, 8, 8), color)
+# 			draw_rect(Rect2(x * 10, y * 10, 8, 8), color)
+
+func is_road(x, y) -> bool:
+	return get_tile_padded(x, y) == HIGHWAY or get_tile_padded(x, y) == ROAD or get_tile_padded(x, y) == OUTSIDE 
 
 func set_tile(x: int, y: int, tile: int):
 	array[x + y * MAP_WIDTH] = tile
@@ -104,8 +158,6 @@ func gen_roads():
 
 		if not surrounded:
 			continue
-
-		print(x, " ", y)
 
 		var new = array.duplicate(true)
 		new[x + y * MAP_WIDTH] = ROAD

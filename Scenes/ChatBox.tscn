@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://main_theme.tres" type="Theme" id=1]
+[ext_resource path="res://Scripts/Ui/ChatBox.gd" type="Script" id=2]
+[ext_resource path="res://Textures/bubble.png" type="Texture" id=3]
+
+[node name="ChatBox" type="MarginContainer"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1000.0
+margin_top = -180.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 1000.0
+margin_bottom = 180.0
+mouse_filter = 2
+texture = ExtResource( 3 )
+
+[node name="Label" type="RichTextLabel" parent="TextureRect"]
+margin_left = 84.0
+margin_top = 20.0
+margin_right = 974.0
+margin_bottom = 155.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+meta_underlined = false
+scroll_active = false
+
