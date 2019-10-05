@@ -18,6 +18,7 @@ texture = ExtResource( 2 )
 centered = false
 offset = Vector2( 0, -600 )
 script = ExtResource( 3 )
+y_offset_before_parallax = 768.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 448, -430 )

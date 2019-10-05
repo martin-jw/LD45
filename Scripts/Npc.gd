@@ -1,23 +1,24 @@
 extends KinematicBody2D
 
-signal trade_started(trader, item_to_trade, num_to_trade, items_required)
+signal trade_started(trader, prompt, item_to_trade, num_to_trade, items_required)
 
 export var speed: float = 100
 
 onready var rect = $ColorRect
-onready var camera = $"../Camera"
+var camera: Camera2D
 var path: PoolVector2Array
 var city: Navigation2D
 
 var item_to_trade: String
 var num_to_trade: int
 var items_required: Dictionary
+var prompt: Array
 
 var trading: bool = false
 var traded: bool = false
 
 func _ready():
-	add_to_group("NPC")
+	camera = $"../Camera"
 	rect.color = Color(randf(), randf(), randf())
 	
 	city = get_node("../City")
@@ -25,11 +26,11 @@ func _ready():
 	find_path()
 	choose_trade()
 
-func interact(player: Player):
+func interact(player):
 	if !traded:
 		player.trading = true
 		trading = true
-		emit_signal("trade_started", self, item_to_trade, num_to_trade, items_required)
+		emit_signal("trade_started", self, prompt, item_to_trade, num_to_trade, items_required)
 
 func choose_trade():
 
@@ -68,6 +69,15 @@ func choose_trade():
 			var num = get_rand_element(items[k])
 			if num > 0:
 				items_required[k] = num
+	
+	var ind = randi() % items_required.keys().size()
+	var prompt_item = items_required.keys()[ind]
+	
+	var prompts = Items.item_prompts.get(prompt_item)
+	if prompts != null:
+		
+		var pind = randi() % prompts.size()
+		prompt = prompts[pind]
 
 
 func get_rand_element(array: Array):

@@ -10,6 +10,17 @@ var interactables: Array = Array()
 
 var trading: bool = false
 
+var clothes_level: int = 0
+
+var clothes_colors: Array = [
+	Color(1, 1, 1),
+	Color(0, 0, 1),
+	Color(1, 1, 0)
+]
+
+var items_per_second: Dictionary = Dictionary()
+var items_accum: Dictionary = Dictionary()
+
 onready var camera: Camera2D = $"../Camera"
 
 func _process(delta: float):
@@ -27,6 +38,19 @@ func _process(delta: float):
 			print("Interacted!")
 			obj.interact(self)
 
+func found_clothes(clothes):
+	var level = Items.clothes_levels[clothes]
+	if clothes_level < level:
+		clothes_level = level
+		($ColorRect).color = clothes_colors[clothes_level]
+
+func add_item_per_second(item, amount_per_second):
+	if !items_per_second.has(item):
+		items_per_second[item] = amount_per_second
+		items_accum[item] = 0
+	else:
+		items_per_second[item] += amount_per_second
+
 func _physics_process(delta: float):
 	
 	if !trading:
@@ -35,6 +59,13 @@ func _physics_process(delta: float):
 		
 		var direction = Vector2(move_horizontal, move_vertical).normalized()
 		move_and_slide(direction * speed)
+
+	for k in items_per_second:
+		var change = items_per_second[k]
+		items_accum[k] += change * delta
+		while items_accum[k] > 1.0:
+			inventory.add(k, 1)
+			items_accum[k] -= 1
 	
 	if camera == null:
 		z_index = position.y / 128
@@ -44,8 +75,6 @@ func _physics_process(delta: float):
 	#print("Player ", position)
 
 func _on_interact_area_entered(area: Area2D):
-	print(area.name)
-	print(area.get_groups())
 	if area.is_in_group("Interactable"):
 		interactables.append(area)
 	

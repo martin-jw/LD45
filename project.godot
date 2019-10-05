@@ -45,6 +45,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Items="*res://Scripts/Items.gd"
+Specials="*res://Scripts/Specials/Specials.gd"
 
 [debug]
 

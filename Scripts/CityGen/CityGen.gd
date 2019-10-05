@@ -4,6 +4,7 @@ onready var roadmap = $RoadMap
 onready var tilemap = $TileMap
 
 var spawnpoint: Vector2 
+var size: Vector2
 
 var features: Array = [
 	preload("res://Scenes/CityFeatures/SmallHouse.tscn"),
@@ -15,10 +16,15 @@ func _ready():
 
 	roadmap.MAP_WIDTH = 20
 	roadmap.MAP_HEIGHT = 20
+	size = Vector2(roadmap.MAP_WIDTH * Config.PLOT_SIZE, roadmap.MAP_HEIGHT * Config.PLOT_SIZE)
 
+	print("Generating roadmap...")
 	roadmap.generate()
+	
+	print("Getting spawnpoint...")
 	spawnpoint = roadmap.get_spawnpoint()
 	
+	print("Filling plots...")
 	fill_plots()
 	
 func get_spawnpoint():

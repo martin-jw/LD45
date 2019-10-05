@@ -26,6 +26,7 @@ margin_top = 20.0
 margin_right = 974.0
 margin_bottom = 155.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
+bbcode_enabled = true
 meta_underlined = false
 scroll_active = false
 

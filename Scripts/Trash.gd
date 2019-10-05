@@ -4,8 +4,12 @@ signal removed
 
 onready var camera: Camera2D = $"../Camera"
 
-func interact(player: Player):
-	player.inventory.add("clip", 1)
+func interact(player):
+	
+	if randf() < 0.75:
+		player.inventory.add("clip", 1)
+	else:
+		player.inventory.add("food", 1)
 	emit_signal("removed")
 	queue_free()
 	

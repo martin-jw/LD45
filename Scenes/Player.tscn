@@ -15,6 +15,7 @@ radius = 160.0
 [node name="Player" type="KinematicBody2D" groups=[
 "Player",
 ]]
+collision_mask = 3
 script = ExtResource( 1 )
 speed = 200.0
 
@@ -44,4 +45,5 @@ script = ExtResource( 2 )
 
 [connection signal="area_entered" from="InteractRange" to="." method="_on_interact_area_entered"]
 [connection signal="area_exited" from="InteractRange" to="." method="_on_interact_area_exited"]
+[connection signal="found_clothes" from="Inventory" to="." method="found_clothes"]
 [connection signal="item_changed" from="Inventory" to="." method="item_changed"]

@@ -2,14 +2,26 @@ extends Node
 class_name Inventory
 
 signal item_changed(item, count)
+signal found_clothes(item)
 
 var objects: Dictionary
 
 func _init():
 	objects = Dictionary()
 
+func _ready():
+	add("clip", 30)
+	add("food", 30)
+	add("pencil", 15)
+	add("pen", 1)
+	add("clothes_basic", 1)
+	add("job", 15)
+
 func add(item: String, count: int):
-	print("Added ", count, " ", item)
+
+	if item.substr(0, 8).nocasecmp_to("clothes_") == 0:
+		emit_signal("found_clothes", item)
+		return
 	var num = objects.get(item, 0)
 	num += count
 	objects[item] = num

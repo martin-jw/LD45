@@ -11,6 +11,11 @@ extents = Vector2( 1280, 720 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
+max_npc_count = null
+max_trash_count = null
+trash_spawn_interval = null
+max_special_tries = null
+max_npc_special = null
 
 [node name="Camera" type="Camera2D" parent="."]
 offset = Vector2( 0, -128 )
@@ -18,7 +23,9 @@ current = true
 editor_draw_drag_margin = true
 
 [node name="Disabler" type="Area2D" parent="Camera"]
+editor/display_folded = true
 position = Vector2( 0, -128 )
+collision_mask = 31775
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/Disabler"]
@@ -27,6 +34,7 @@ shape = SubResource( 1 )
 [node name="City" parent="." instance=ExtResource( 3 )]
 
 [node name="UILayer" type="CanvasLayer" parent="."]
+editor/display_folded = true
 
 [node name="ChatBox" parent="UILayer" instance=ExtResource( 4 )]
 visible = false
