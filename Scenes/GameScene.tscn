@@ -1,40 +1,164 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Disabler.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/CityGen.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/ChatBox.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Ui/UiInventory.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Textures/panel.png" type="Texture" id=6]
+[ext_resource path="res://real-retro-newer.ttf" type="DynamicFontData" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 1280, 720 )
+extents = Vector2( 1280, 1280 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 50, 9044 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 9044, 50 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 9044, 50 )
+
+[sub_resource type="StyleBoxTexture" id=5]
+content_margin_left = 10.0
+content_margin_right = 2.0
+content_margin_top = 5.0
+content_margin_bottom = 2.0
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 64, 64 )
+margin_left = 12.0
+margin_right = 12.0
+margin_top = 12.0
+margin_bottom = 12.0
+
+[sub_resource type="DynamicFont" id=6]
+size = 32
+extra_spacing_space = 8
+font_data = ExtResource( 7 )
+
+[sub_resource type="Theme" id=7]
+default_font = SubResource( 6 )
+PanelContainer/styles/panel = SubResource( 5 )
+
+[sub_resource type="Animation" id=8]
+resource_name = "FadeIn"
+length = 7.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/MarginContainer2/Label:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 6, 7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CanvasLayer/MarginContainer3/Label:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.5, 2.5, 6, 7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("City:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 3, 6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 6.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "start"
+} ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "Win"
+length = 7.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("City:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("VictoryScreen/MarginContainer2:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 3, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("VictoryScreen/MarginContainer3:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 4, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
-max_npc_count = null
-max_trash_count = null
-trash_spawn_interval = null
-max_special_tries = null
-max_npc_special = null
 
 [node name="Camera" type="Camera2D" parent="."]
 offset = Vector2( 0, -128 )
 current = true
+limit_left = 0
+limit_top = 0
+limit_right = 18048
+limit_bottom = 18048
 editor_draw_drag_margin = true
 
 [node name="Disabler" type="Area2D" parent="Camera"]
-editor/display_folded = true
 position = Vector2( 0, -128 )
 collision_mask = 31775
 script = ExtResource( 2 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/Disabler"]
+[node name="Shape" type="CollisionShape2D" parent="Camera/Disabler"]
 shape = SubResource( 1 )
 
 [node name="City" parent="." instance=ExtResource( 3 )]
+modulate = Color( 1, 1, 1, 0 )
 
 [node name="UILayer" type="CanvasLayer" parent="."]
-editor/display_folded = true
 
 [node name="ChatBox" parent="UILayer" instance=ExtResource( 4 )]
 visible = false
@@ -42,6 +166,112 @@ margin_right = -1280.0
 margin_bottom = -720.0
 
 [node name="UiInventory" parent="UILayer" instance=ExtResource( 5 )]
+visible = false
+
+[node name="Bounds" type="StaticBody2D" parent="."]
+editor/display_folded = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounds"]
+position = Vector2( -50, 9024 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Bounds"]
+position = Vector2( 17970, 9024 )
+scale = Vector2( 1, 0.996629 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Bounds"]
+position = Vector2( 9024, -50 )
+shape = SubResource( 3 )
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Bounds"]
+position = Vector2( 9044, 17970 )
+shape = SubResource( 4 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+theme = SubResource( 7 )
+custom_constants/margin_top = 150
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer2"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_top = 150.0
+margin_right = 1280.0
+margin_bottom = 182.0
+custom_colors/font_color_shadow = Color( 0.211765, 0.207843, 0.207843, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+text = "Nothing Left..."
+align = 1
+valign = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -182.0
+theme = SubResource( 7 )
+custom_constants/margin_bottom = 150
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer3"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_right = 1280.0
+margin_bottom = 32.0
+custom_colors/font_color_shadow = Color( 0.211765, 0.207843, 0.207843, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+text = "...and yet he carried on."
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "FadeIn"
+anims/FadeIn = SubResource( 8 )
+anims/Win = SubResource( 9 )
+
+[node name="VictoryScreen" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer2" type="MarginContainer" parent="VictoryScreen"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+theme = SubResource( 7 )
+custom_constants/margin_top = 150
+
+[node name="Label" type="Label" parent="VictoryScreen/MarginContainer2"]
+margin_top = 150.0
+margin_right = 1280.0
+margin_bottom = 182.0
+custom_colors/font_color_shadow = Color( 0.211765, 0.207843, 0.207843, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+text = "Nothing Left..."
+align = 1
+valign = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="VictoryScreen"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -182.0
+theme = SubResource( 7 )
+custom_constants/margin_bottom = 150
+
+[node name="Label" type="Label" parent="VictoryScreen/MarginContainer3"]
+margin_right = 1280.0
+margin_bottom = 32.0
+custom_colors/font_color_shadow = Color( 0.211765, 0.207843, 0.207843, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+text = " ...you got it all!"
+align = 1
+valign = 1
 
 [connection signal="area_entered" from="Camera/Disabler" to="Camera/Disabler" method="_on_object_entered"]
 [connection signal="area_exited" from="Camera/Disabler" to="Camera/Disabler" method="_on_object_exited"]

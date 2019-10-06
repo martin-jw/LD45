@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/talk7.wav-4a3aa01b39506122f97fed457de18f25.sample"
+
+[deps]
+
+source_file="res://Audio/speech/talk7.wav"
+dest_files=[ "res://.import/talk7.wav-4a3aa01b39506122f97fed457de18f25.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

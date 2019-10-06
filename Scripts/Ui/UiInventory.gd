@@ -1,11 +1,12 @@
 extends MarginContainer
 
-onready var container = $VBoxContainer
+onready var container = $"VBoxContainer/VBoxContainer"
 
 const ui_item: PackedScene = preload("res://Scenes/Ui/UiInventoryItem.tscn")
 var ui_items: Dictionary = Dictionary()
 
 func update_item(item, count):
+	set_visible(true)
 	if ui_items.has(item):
 		var ui_obj = ui_items[item]
 		ui_obj.set_count(count)

@@ -1,16 +1,20 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Inventory.gd" type="Script" id=2]
+[ext_resource path="res://Textures/player.png" type="Texture" id=3]
+[ext_resource path="res://Audio/clip_pickup.wav" type="AudioStream" id=4]
+[ext_resource path="res://Audio/player_step.wav" type="AudioStream" id=5]
+[ext_resource path="res://Audio/soundtrack.wav" type="AudioStream" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 16 )
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 30.0
+radius = 16.0
 
 [sub_resource type="CircleShape2D" id=3]
-radius = 160.0
+radius = 120.0
 
 [node name="Player" type="KinematicBody2D" groups=[
 "Player",
@@ -18,11 +22,6 @@ radius = 160.0
 collision_mask = 3
 script = ExtResource( 1 )
 speed = 200.0
-
-[node name="ColorRect" type="ColorRect" parent="."]
-margin_left = -32.0
-margin_top = -256.0
-margin_right = 32.0
 
 [node name="ShouldHide" type="Area2D" parent="." groups=[
 "ShouldHide",
@@ -42,6 +41,30 @@ shape = SubResource( 3 )
 
 [node name="Inventory" type="Node2D" parent="."]
 script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 4, 4 )
+texture = ExtResource( 3 )
+offset = Vector2( 0, -30 )
+vframes = 4
+hframes = 9
+frame = 27
+
+[node name="Pickup Sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+volume_db = -25.235
+bus = "Effects"
+
+[node name="Step" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+volume_db = -26.558
+bus = "Effects"
+
+[node name="Soundtrack" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = -10.0
+autoplay = true
+bus = "Soundtrack"
 
 [connection signal="area_entered" from="InteractRange" to="." method="_on_interact_area_entered"]
 [connection signal="area_exited" from="InteractRange" to="." method="_on_interact_area_exited"]

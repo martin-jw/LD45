@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://main_theme.tres" type="Theme" id=1]
 [ext_resource path="res://Scripts/Ui/ChatBox.gd" type="Script" id=2]
 [ext_resource path="res://Textures/bubble.png" type="Texture" id=3]
+[ext_resource path="res://Textures/key_q.png" type="Texture" id=4]
+[ext_resource path="res://Textures/key_e.png" type="Texture" id=5]
 
 [node name="ChatBox" type="MarginContainer"]
 anchor_left = 1.0
@@ -29,4 +31,55 @@ custom_colors/default_color = Color( 0, 0, 0, 1 )
 bbcode_enabled = true
 meta_underlined = false
 scroll_active = false
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -210.0
+margin_top = -58.0
+custom_constants/margin_right = 30
+custom_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextureRect/MarginContainer"]
+margin_right = 180.0
+margin_bottom = 48.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/MarginContainer/HBoxContainer"]
+margin_right = 48.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+texture = ExtResource( 4 )
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="TextureRect/MarginContainer/HBoxContainer"]
+margin_left = 52.0
+margin_top = 12.0
+margin_right = 88.0
+margin_bottom = 36.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "NO"
+
+[node name="YesOption" type="HBoxContainer" parent="TextureRect/MarginContainer/HBoxContainer"]
+margin_left = 92.0
+margin_right = 180.0
+margin_bottom = 48.0
+
+[node name="TextureRect2" type="TextureRect" parent="TextureRect/MarginContainer/HBoxContainer/YesOption"]
+margin_right = 48.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+texture = ExtResource( 5 )
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="TextureRect/MarginContainer/HBoxContainer/YesOption"]
+margin_left = 52.0
+margin_top = 12.0
+margin_right = 88.0
+margin_bottom = 36.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "OK"
 

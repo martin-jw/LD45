@@ -1,6 +1,8 @@
 extends Node
 class_name Inventory
 
+const InventoryPopup = preload("res://Scenes/InventoryPopup.tscn")
+
 signal item_changed(item, count)
 signal found_clothes(item)
 
@@ -10,12 +12,7 @@ func _init():
 	objects = Dictionary()
 
 func _ready():
-	add("clip", 30)
-	add("food", 30)
-	add("pencil", 15)
-	add("pen", 1)
-	add("clothes_basic", 1)
-	add("job", 15)
+	pass
 
 func add(item: String, count: int):
 
@@ -25,6 +22,12 @@ func add(item: String, count: int):
 	var num = objects.get(item, 0)
 	num += count
 	objects[item] = num
+	
+	var popup = InventoryPopup.instance()
+	popup.position = Vector2(0, -264)
+	popup.set_text(str("+", count, " ", Items.pluralize(item, count)))
+	get_parent().add_child(popup)
+	
 	emit_signal("item_changed", item, num)
 
 func get_count(item: String) -> int:

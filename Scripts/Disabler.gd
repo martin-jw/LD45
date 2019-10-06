@@ -3,9 +3,12 @@ extends Area2D
 signal npc_removed
 signal trash_removed
 
+var enabling = true
+
 func _on_object_entered(object):
-	object.set_process(true)
-	object.set_physics_process(true)
+	if enabling:
+		object.set_process(true)
+		object.set_physics_process(true)
 
 func _on_object_exited(object):
 	

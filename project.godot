@@ -40,6 +40,7 @@ _global_script_class_icons={
 
 config/name="LD45"
 run/main_scene="res://Scenes/GameScene.tscn"
+boot_splash/image="res://bootsplash.png"
 config/icon="res://icon.png"
 
 [autoload]
@@ -93,6 +94,16 @@ cancel={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"unicode":0,"echo":false,"script":null)
  ]
 }
+mute_soundtrack={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":77,"unicode":0,"echo":false,"script":null)
+ ]
+}
+mute_effects={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":78,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [memory]
 
@@ -100,4 +111,5 @@ limits/message_queue/max_size_kb=4096
 
 [rendering]
 
+environment/default_clear_color=Color( 0.121569, 0.117647, 0.211765, 1 )
 environment/default_environment="res://default_env.tres"

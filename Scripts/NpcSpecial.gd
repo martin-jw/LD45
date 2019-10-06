@@ -14,6 +14,7 @@ func interact(player: Player):
 	if can_converse:
 		trading = true
 		player.trading = true
+		talk_sound.play()
 		emit_signal("conversation_started", self, get_start_conversation(player))
 	
 func response(player, stage: int, accepted: bool):
@@ -27,8 +28,6 @@ func response(player, stage: int, accepted: bool):
 
 func _ready():
 	._ready()
-	remove_from_group("NPC")
-	rect.color = Color.black
 	set_physics_process(false)
 	set_process(false)
 

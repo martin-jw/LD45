@@ -1,6 +1,6 @@
 extends "res://Scripts/NpcSpecial.gd"
 
-export var work_frequency: float = 5.0
+export var work_frequency: float = 2
 
 var cancel_next: bool = false
 var working: bool = false
@@ -10,7 +10,7 @@ var item_to_offer
 func _ready():
 	._ready()
 	var f = randf()
-	if f < 0.1:
+	if f < 0.05:
 		item_to_offer = "pencil"
 	elif f < 0.30:
 		item_to_offer = "food"
@@ -37,6 +37,7 @@ func response(player, stage: int, accepted: bool):
 				))
 				working = true
 				can_converse = false
+				traded = true
 			else:
 				emit_signal("respond", str(
 					"Oh, you're unemployed too? It sucks, doesn't it?"

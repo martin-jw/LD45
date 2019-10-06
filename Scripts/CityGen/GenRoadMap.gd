@@ -21,11 +21,13 @@ func generate():
 		array.append(0)
 
 	gen_highways()
-	gen_roads()
 	find_spawnpoint()
+	gen_roads()
+	
+	set_tile(spawnpoint.x, spawnpoint.y, PLOT)
 	
 	fill_tilemap()
-	tilemap.update()
+	tilemap.update_bitmask_region()
 	
 func get_spawnpoint() -> Vector2:
 	return spawnpoint
@@ -36,11 +38,11 @@ func find_spawnpoint():
 	var y = -1
 	while get_tile_padded(x, y) != PLOT:
 
-		x = round(rand_range(10, MAP_WIDTH - 11))
-		y = round(rand_range(10, MAP_HEIGHT - 11))
+		x = round(rand_range(5, MAP_WIDTH - 6))
+		y = round(rand_range(5, MAP_HEIGHT - 6))
 
-	spawnpoint = Vector2(x, y)
 	set_tile(x, y, FILLED_PLOT)
+	spawnpoint = Vector2(x, y)
 	
 func fill_tilemap():
 	var psize = Config.PLOT_SIZE
@@ -49,25 +51,25 @@ func fill_tilemap():
 			if get_tile(x, y) == HIGHWAY or get_tile(x, y) == ROAD:
 				for dx in range(0, psize):
 					for dy in range(0, psize):
-						tilemap.set_cell(x * psize + dx, y * psize + dy, 0, false, false, false, Vector2(0, 0))
+						tilemap.set_cell(x * psize + dx, y * psize + dy, 3)
 
 						if dx == 0 and !is_road(x - 1, y):
-							tilemap.set_cell(x * psize  + dx, y * psize + dy, 0, false, false, false, Vector2(0, 1))
+							tilemap.set_cell(x * psize  + dx, y * psize + dy, 2, false, false, false, Vector2(randi() % 9, 0))
 						if dx == psize - 1 and !is_road(x + 1, y):
-							tilemap.set_cell(x * psize + dx, y * psize + dy, 0, false, false, false, Vector2(0, 1))
+							tilemap.set_cell(x * psize + dx, y * psize + dy, 2, false, false, false, Vector2(randi() % 9, 0))
 						if dy == 0 and !is_road(x, y - 1):
-							tilemap.set_cell(x * psize + dx, y * psize + dy, 0, false, false, false, Vector2(0, 1))
+							tilemap.set_cell(x * psize + dx, y * psize + dy, 2, false, false, false, Vector2(randi() % 9, 0))
 						if dy == psize - 1 and !is_road(x, y + 1):
-							tilemap.set_cell(x * psize + dx, y * psize + dy, 0, false, false, false, Vector2(0, 1))
+							tilemap.set_cell(x * psize + dx, y * psize + dy, 2, false, false, false, Vector2(randi() % 9, 0))
 
 						if dx == 0 and dy == 0 and !is_road(x - 1, y - 1):
-							tilemap.set_cell(x * psize + dx, y * psize + dy, 0, false, false, false, Vector2(0, 1))
+							tilemap.set_cell(x * psize + dx, y * psize + dy, 2, false, false, false, Vector2(randi() % 9, 0))
 						if dx == psize - 1 and dy == 0 and !is_road(x + 1, y - 1):
-							tilemap.set_cell(x * psize + dx, y * psize + dy, 0, false, false, false, Vector2(0, 1))
+							tilemap.set_cell(x * psize + dx, y * psize + dy, 2, false, false, false, Vector2(randi() % 9, 0))
 						if dx == psize - 1 and dy == psize - 1 and !is_road(x + 1, y + 1):
-							tilemap.set_cell(x * psize + dx, y * psize + dy, 0, false, false, false, Vector2(0, 1))
+							tilemap.set_cell(x * psize + dx, y * psize + dy, 2, false, false, false, Vector2(randi() % 9, 0))
 						if dx == 0 and dy == psize - 1 and !is_road(x - 1, y + 1):
-							tilemap.set_cell(x * psize + dx, y * psize + dy, 0, false, false, false, Vector2(0, 1))
+							tilemap.set_cell(x * psize + dx, y * psize + dy, 2, false, false, false, Vector2(randi() % 9, 0))
 
 			else:
 				for dx in range(0, psize):

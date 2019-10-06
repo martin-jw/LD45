@@ -28,7 +28,7 @@ func _ready():
 	fill_plots()
 	
 func get_spawnpoint():
-	var spawn = (spawnpoint * Config.PLOT_SIZE + Vector2(Config.PLOT_SIZE / 2, Config.PLOT_SIZE / 2))
+	var spawn = spawnpoint * Config.PLOT_SIZE
 	spawn.x *= tilemap.cell_size.x
 	spawn.y *= tilemap.cell_size.y
 	

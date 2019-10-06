@@ -3,8 +3,9 @@ extends KinematicBody2D
 signal trade_started(trader, prompt, item_to_trade, num_to_trade, items_required)
 
 export var speed: float = 100
+onready var sprite: Sprite = $Sprite
+onready var talk_sound = $TalkSound
 
-onready var rect = $ColorRect
 var camera: Camera2D
 var path: PoolVector2Array
 var city: Navigation2D
@@ -17,19 +18,50 @@ var prompt: Array
 var trading: bool = false
 var traded: bool = false
 
+var previous_position: Vector2
+var movement_in_frame: Vector2
+var facing_angle: float = PI / 2
+
+var base_frame: int = 0
+var move_frame: int = 0
+
+var frame_time: float = 0
+
 func _ready():
 	camera = $"../Camera"
-	rect.color = Color(randf(), randf(), randf())
+	previous_position = position
 	
 	city = get_node("../City")
 	
 	find_path()
 	choose_trade()
+	find_random_sprite()
+
+var sprites = [
+	"npc1.png",
+	"npc2.png",
+	"npc3.png",
+	"npc4.png",
+	"npc5.png",
+	"npc6.png",
+	"npc7.png",
+	"npc8.png",
+	"npc9.png",
+	"npc10.png",
+	"npc11.png",
+	"npc12.png",
+	"npc13.png",
+]
+	
+func find_random_sprite():
+	var ind = randi() % sprites.size()
+	sprite.texture = load("res://Textures/npc/" + sprites[ind])
 
 func interact(player):
 	if !traded:
 		player.trading = true
 		trading = true
+		talk_sound.play()
 		emit_signal("trade_started", self, prompt, item_to_trade, num_to_trade, items_required)
 
 func choose_trade():
@@ -88,6 +120,37 @@ func find_path():
 	if city != null:
 		var point = position + Vector2((randf() - 0.5) * 12800, (randf() - 0.5) * 12800)
 		path = city.get_simple_path(position, point)
+
+func _process(delta):
+
+	if movement_in_frame.length() > 0:
+		facing_angle = movement_in_frame.angle()
+
+	var p = PI / 4
+	
+	if facing_angle >= -p and facing_angle < p:
+		base_frame = 9
+	elif facing_angle >= p and facing_angle < 3*p:
+		base_frame = 0
+	elif facing_angle >= 3*p or facing_angle < -3*p:
+		base_frame = 27
+	else:
+		base_frame = 18
+
+	if movement_in_frame.length() > speed * delta / 4:
+		frame_time += delta
+		if frame_time >= 0.150:
+			if move_frame < 8:
+				move_frame += 1
+			else:
+				move_frame = 1
+			frame_time -= 0.1
+	else:
+		move_frame = 0
+
+	sprite.frame = base_frame + move_frame
+	movement_in_frame = position - previous_position
+	previous_position = position
 
 func _physics_process(delta):
 	

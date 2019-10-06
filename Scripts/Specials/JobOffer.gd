@@ -15,6 +15,7 @@ func get_start_conversation(player) -> String:
             " You want it?")
 
 func response(player, stage: int, accepted: bool):
+    print("Responding..")
     if cancel_next:
         emit_signal("respond", END_CONV)
         if give_job:
@@ -38,6 +39,7 @@ func response(player, stage: int, accepted: bool):
                 emit_signal("respond", "You're hired!")
                 give_job = true
                 can_converse = false
+                traded = true
                 cancel_next = true
         else:
             emit_signal("respond", "You need to sign the contract to get the job!")
